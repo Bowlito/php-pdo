@@ -1,3 +1,6 @@
+-- Active: 1750235329113@@127.0.0.1@3306@php_pdo
+
+DROP DATABASE IF EXISTS php_pdo;
 CREATE DATABASE php_pdo;
 
 USE php_pdo;
