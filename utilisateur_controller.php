@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
             $query->bindValue(":new_name", $new_name);
             $query->execute();
         } catch (PDOException $ex) {
-            echo "\nErreur : problème de connexion avec la BD" . $ex->getMessage();
+            echo $ex->getMessage();
         }
     }
 }
