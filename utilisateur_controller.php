@@ -1,64 +1,34 @@
 <?php
+include './utilisateur_repository.php';
 
-
-if ($_SERVER['REQUEST_METHOD'] == "GET") {
-    $new_user = "";
-    $new_pwd = "";
-    $new_name = "";
-} else {
-
-
-    $new_user = $_POST['add_username'];
-    $new_pwd = $_POST['add_pwd'];
-    $new_name = $_POST['add_name'];
-
-
-    $mysql_username = "root";
-    $mysql_password = "";
-    $mysql_db = "php_pdo";
-    if ($new_user != "" or $new_pwd != "" or $new_namer = "") {
-        try {
-            $dsn = "mysql:host=localhost;port=3306;dbname=$mysql_db;charset=utf8";
-            $pdo = new PDO($dsn, $mysql_username, $mysql_password);
-            $insert = "INSERT INTO utilisateurs(username, password, nom) VALUES (:new_usr, :new_pwd, :new_name) ";
-            $query = $pdo->prepare($insert);
-            $query->bindValue(":new_usr", $new_user);
-            $query->bindValue(":new_pwd", $new_pwd);
-            $query->bindValue(":new_name", $new_name);
-            $query->execute();
-        } catch (PDOException $ex) {
-            echo $ex->getMessage();
-        }
-    }
+// traiter les données de la page Connexion.php
+if (str_contains($_SERVER['HTTP_REFERER'], "connexion.php")) {
+    $name = $_POST['username'];
+    $pwd = $_POST['password'];
+    check_username_and_password($name, $pwd);
 }
-    
+// s'exécute en soumettant le formulaire d'ajout de nouvel utilisateur
+if (str_contains($_SERVER['HTTP_REFERER'], "utilisateur.php") and $_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = $_POST['username'];
+    $pwd = $_POST['password'];
+    $nom = $_POST['nom'];
+    save($name, $pwd, $nom);
+    header("location: utilisateur.php");
+    die();
+}
+// s'exécute en cliquant sur le lien de suppression
+if (str_contains($_SERVER['HTTP_REFERER'], "utilisateur.php") and $_SERVER['REQUEST_METHOD'] == 'GET') {
 
-//solution avec un marqueur nominatif
-// $name = $_POST['username'];
-// $pwd = $_POST['password'];
+    $id = $_GET['id'];
+    remove($id);
+    header("location: utilisateur.php");
+    die();
+}
 
-// $mysql_username = "root";
-// $mysql_password = "";
-// $mysql_db = "php_pdo";
 
-// try {
-//     $dsn = "mysql:host=localhost;port=3306;dbname=$mysql_db;charset=utf8";
-//     $pdo = new PDO($dsn, $mysql_username, $mysql_password);
-//     $select = "SELECT * FROM utilisateurs WHERE username = :name AND password = :pwd";
-//     echo "<br>$select<br>";
-//     $query = $pdo->prepare($select);
-//     $query->bindValue(":name", $name);
-//     $query->bindValue(":pwd", $pwd);
-//     $query->execute();
-//     $resultat = $query->fetch();
-//     if ($resultat != false) {
-//         echo "Vous êtes bien connectés : $name -- $pwd";
-//     } else {
-//         echo "Identifiants incorrects";
-//     }
-// } catch (PDOException $ex) {
-//     echo "\nErreur : problème de connexion avec la BD" . $ex->getMessage();
-// }
+
+// solution avec un marqueur nominatif
+
 // // solution avec les fonctions de transformation : htmlentities
 // $name = $_POST['username'];
 // $pwd = $_POST['password'];
