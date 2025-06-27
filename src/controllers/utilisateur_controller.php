@@ -1,5 +1,5 @@
 <?php
-include './utilisateur_repository.php';
+include "../repositories/utilisateur_repository.php";
 
 // traiter les données de la page Connexion.php
 if (str_contains($_SERVER['HTTP_REFERER'], "connexion")) {
@@ -13,7 +13,7 @@ if (str_contains($_SERVER['HTTP_REFERER'], "gerer_utilisateur") and $_SERVER['RE
     $pwd = $_POST['password'];
     $nom = $_POST['nom'];
     save($name, $pwd, $nom);
-    header("location: gerer_utilisateur.php");
+    header("location: ../../views/gerer_utilisateur.php");
     die();
 }
 // s'exécute en cliquant sur le lien de suppression
@@ -21,7 +21,7 @@ if (str_contains($_SERVER['HTTP_REFERER'], "gerer_utilisateur") and $_SERVER['RE
 
     $id = $_GET['id'];
     remove($id);
-    header("location: gerer_utilisateur.php");
+    header("location: ../../views/gerer_utilisateur.php");
     die();
 }
 // s'exécute en soumettant le formulaire de modification 
@@ -32,7 +32,7 @@ if (str_contains($_SERVER['HTTP_REFERER'], "modifier_utilisateur") and $_SERVER[
     $id = $_POST['id'];
     update($name, $pwd, $nom, $id);
     // echo("$name, $pwd, $nom, $id");
-    header("location: gerer_utilisateur.php");
+    header("location: ../../views/gerer_utilisateur.php");
     die();
 }
 

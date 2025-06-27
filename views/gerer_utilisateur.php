@@ -1,7 +1,7 @@
 <?php
-include "./utilisateur_repository.php";
-$utilisateur = find_by_id($_GET['id']);
+include  "../src/services/utilisateur_service.php";
 
+$utilisateurs = show_utilisateurs_in_list();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -9,34 +9,30 @@ $utilisateur = find_by_id($_GET['id']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page de modification</title>
+    <title>Gestion des utilisateurs</title>
 </head>
 
 <body>
-    <h1>Page de modification</h1>
+    <h1>Gestion des utilisateurs</h1>
+    <h2>Créer un nouvel utilisateur</h2>
     <main class=container>
-        <form action="./utilisateur_controller.php" method="post">
-            <div class="mb-3 row">
-                <div class="col-sm-10">
-                    <input class="form-control" type="hidden"  name=id value="<?= $utilisateur[0] ?>">
-                </div>
-            </div>
+        <form action="../src/controllers/utilisateur_controller.php" method="post">
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label" for="username">Nom d'utilisateur</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" id=username name=username value="<?= $utilisateur[1] ?>">
+                    <input class="form-control" type="text" id=username name=username>
                 </div>
             </div>
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label" for="password">Mot de passe</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" id=password name=password value="<?= $utilisateur[2] ?>">
+                    <input class="form-control" type="password" id=password name=password>
                 </div>
             </div>
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label" for="nom">Nom complet</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" id=nom name=nom  value="<?= $utilisateur[3] ?>">
+                    <input class="form-control" type="text" id=nom name=nom>
                 </div>
             </div>
             <div>
@@ -47,7 +43,10 @@ $utilisateur = find_by_id($_GET['id']);
 
         </form>
     </main>
-
+    <h2>Liste des utilisateurs</h2>
+    <div>
+        <?= $utilisateurs ?>
+    </div>
 </body>
 
 </html>

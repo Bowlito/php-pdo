@@ -1,12 +1,12 @@
 <?php
-include "./utilisateur_repository.php";
+include  "../src/repositories/utilisateur_repository.php";
 
 function show_utilisateurs_in_list()
 {
     $utilisateurs = find_all();
     $liste = "<ul>";
     foreach ($utilisateurs as $user) {
-        $a_sup = "<a href='./utilisateur_controller.php?id=$user[0]'>Supprimer</a>";
+        $a_sup = "<a href='../src/controllers/utilisateur_controller.php?id=$user[0]'>Supprimer</a>";
         $a_mod = "<a href='./modifier_utilisateur.php?id=$user[0]'>Modifier</a>";
         $liste .= "<li>$user[1] $user[2] $user[3] $a_sup $a_mod</li>";
     }
