@@ -1,12 +1,12 @@
 <?php
+include  __DIR__ .  "/db.php";
+
 function get_connection()
 {
-    $mysql_username = "root";
-    $mysql_password = "";
-    $mysql_db = "php_pdo";
-
-
-    $dsn = "mysql:host=localhost;port=3306;dbname=$mysql_db;charset=utf8";
-    $pdo = new PDO($dsn, $mysql_username, $mysql_password);
+    $dbname = MYSQL['dbname'];
+    $port = MYSQL['port'];
+    $host = MYSQL['host'];
+    $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8";
+    $pdo = new PDO($dsn, MYSQL['username'], MYSQL['password']);
     return $pdo;
 }
