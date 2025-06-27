@@ -43,6 +43,25 @@ function find_all()
     }
     return [];
 }
+function find_by_id($id)
+{
+    $mysql_username = "root";
+    $mysql_password = "";
+    $mysql_db = "php_pdo";
+
+    try {
+        $dsn = "mysql:host=localhost;port=3306;dbname=$mysql_db;charset=utf8";
+        $pdo = new PDO($dsn, $mysql_username, $mysql_password);
+        $select = "SELECT * FROM utilisateurs WHERE id = :id";
+        $query = $pdo->prepare($select);
+        $query->bindValue(":id", $id);
+        $query->execute();
+        return $query->fetch();
+    } catch (PDOException $ex) {
+        echo "\nErreur : problème de connexion avec la BD" . $ex->getMessage();
+    }
+    return [];
+}
 function save($name, $pwd, $nom)
 {
     $mysql_username = "root";
@@ -79,43 +98,26 @@ function remove($id)
         echo "\nErreur : problème de connexion avec la BD" . $ex->getMessage();
     }
 }
+function update($name, $pwd, $nom, $id)
+{
+    $mysql_username = "root";
+    $mysql_password = "";
+    $mysql_db = "php_pdo";
 
-
-// function find_by_id($id)
-// {
-//     $mysql_username = "root";
-//     $mysql_password = "";
-//     $mysql_db = "php_pdo";
-
-//     try {
-//         $dsn = "mysql:host=localhost;port=3306;dbname=$mysql_db;charset=utf8";
-//         $pdo = new PDO($dsn, $mysql_username, $mysql_password);
-//         $select = "SELECT * FROM utilisateurs WHERE id = :id";
-//         $query = $pdo->query($select);
-//         $query->bindValue(":id", $id);
-//         return $query->fetchAll();
-//     } catch (PDOException $ex) {
-//         echo "\nErreur : problème de connexion avec la BD" . $ex->getMessage();
-//     }
-//     return [];
-// }
-
-// function modify($username, $nom)
-// {
-//     $mysql_username = "root";
-//     $mysql_password = "";
-//     $mysql_db = "php_pdo";
-
-//     try {
-//         $dsn = "mysql:host=localhost;port=3306;dbname=$mysql_db;charset=utf8";
-//         $pdo = new PDO($dsn, $mysql_username, $mysql_password);
-//         $update = "UPDATE utilisateurs SET username = :username, nom = :nom WHERE id = :id";
-//         $query = $pdo->prepare($update);
-//         $query->bindValue(":username", $username);
-//         $query->bindValue(":nom", $nom);
-//         $query->bindValue(":id", $id);
-//         $query->execute();
-//     } catch (PDOException $ex) {
-//         echo "\nErreur : problème de connexion avec la BD" . $ex->getMessage();
-//     }
-// }
+    try {
+        $dsn = "mysql:host=localhost;port=3306;dbname=$mysql_db;charset=utf8";
+        $pdo = new PDO($dsn, $mysql_username, $mysql_password);
+        $select = "UPDATE utilisateurs SET nom = :nom, username= :username, password = :pwd WHERE id = :id";
+        $query = $pdo->prepare($select);
+        $query->bindValue(":username", $name);
+        $query->bindValue(":pwd", $pwd);
+        $query->bindValue(":nom", $nom);
+        $query->bindValue(":id", $id);
+        $query->execute();
+    } catch (PDOException $ex) {
+        echo "\nErreur : problème de connexion avec la BD" . $ex->getMessage();
+        echo $ex->getMessage();
+        echo "$id $name $nom $pwd";
+        die();
+    }
+}

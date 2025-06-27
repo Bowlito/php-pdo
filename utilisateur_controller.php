@@ -2,29 +2,39 @@
 include './utilisateur_repository.php';
 
 // traiter les données de la page Connexion.php
-if (str_contains($_SERVER['HTTP_REFERER'], "connexion.php")) {
+if (str_contains($_SERVER['HTTP_REFERER'], "connexion")) {
     $name = $_POST['username'];
     $pwd = $_POST['password'];
     check_username_and_password($name, $pwd);
 }
 // s'exécute en soumettant le formulaire d'ajout de nouvel utilisateur
-if (str_contains($_SERVER['HTTP_REFERER'], "utilisateur.php") and $_SERVER['REQUEST_METHOD'] == 'POST') {
+if (str_contains($_SERVER['HTTP_REFERER'], "gerer_utilisateur") and $_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['username'];
     $pwd = $_POST['password'];
     $nom = $_POST['nom'];
     save($name, $pwd, $nom);
-    header("location: utilisateur.php");
+    header("location: gerer_utilisateur.php");
     die();
 }
 // s'exécute en cliquant sur le lien de suppression
-if (str_contains($_SERVER['HTTP_REFERER'], "utilisateur.php") and $_SERVER['REQUEST_METHOD'] == 'GET') {
+if (str_contains($_SERVER['HTTP_REFERER'], "gerer_utilisateur") and $_SERVER['REQUEST_METHOD'] == 'GET') {
 
     $id = $_GET['id'];
     remove($id);
-    header("location: utilisateur.php");
+    header("location: gerer_utilisateur.php");
     die();
 }
-
+// s'exécute en soumettant le formulaire de modification 
+if (str_contains($_SERVER['HTTP_REFERER'], "modifier_utilisateur") and $_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = $_POST['username'];
+    $pwd = $_POST['password'];
+    $nom = $_POST['nom'];
+    $id = $_POST['id'];
+    update($name, $pwd, $nom, $id);
+    // echo("$name, $pwd, $nom, $id");
+    header("location: gerer_utilisateur.php");
+    die();
+}
 
 
 // solution avec un marqueur nominatif

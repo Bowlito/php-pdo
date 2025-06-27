@@ -2,7 +2,6 @@
 include "./utilisateur_service.php";
 
 $utilisateurs = show_utilisateurs_in_list();
-
 ?>
 <!DOCTYPE html>
 <html lang="fr">
